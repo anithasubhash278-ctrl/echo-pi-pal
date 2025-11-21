@@ -16,7 +16,7 @@ const Translator = () => {
 
     setIsTranslating(true);
     try {
-      const response = await fetch("http://192.168.4.1:8000/translate", {
+      const response = await fetch("http://10.178.17.91:8000/translate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
