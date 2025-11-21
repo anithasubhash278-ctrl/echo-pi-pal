@@ -7,7 +7,7 @@ export const ConnectivityStatus = () => {
   useEffect(() => {
     const checkConnection = async () => {
       try {
-        const response = await fetch("http://192.168.4.1:8000/health", {
+        const response = await fetch("http://10.178.17.91:8000/health", {
           method: "GET",
           signal: AbortSignal.timeout(3000),
         });
