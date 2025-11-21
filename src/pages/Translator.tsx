@@ -2,12 +2,15 @@ import { ArrowLeft, Languages, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const Translator = () => {
   const [inputText, setInputText] = useState("");
   const [outputText, setOutputText] = useState("");
+  const [fromLang, setFromLang] = useState("en");
+  const [toLang, setToLang] = useState("hi");
   const [isTranslating, setIsTranslating] = useState(false);
   const { toast } = useToast();
 
@@ -21,8 +24,8 @@ const Translator = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: inputText,
-          source: "en",
-          target: "hi",
+          from_lang: fromLang,
+          to_lang: toLang,
         }),
       });
       const data = await response.json();
@@ -58,13 +61,33 @@ const Translator = () => {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 py-6 space-y-4">
         <div className="flex items-center justify-center gap-4 mb-6">
-          <div className="text-center">
-            <p className="font-semibold text-foreground">English</p>
-          </div>
+          <Select value={fromLang} onValueChange={setFromLang}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="hi">Hindi</SelectItem>
+              <SelectItem value="kn">Kannada</SelectItem>
+              <SelectItem value="ta">Tamil</SelectItem>
+              <SelectItem value="te">Telugu</SelectItem>
+            </SelectContent>
+          </Select>
+          
           <ArrowRight className="h-6 w-6 text-primary" />
-          <div className="text-center">
-            <p className="font-semibold text-foreground">Hindi</p>
-          </div>
+          
+          <Select value={toLang} onValueChange={setToLang}>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="hi">Hindi</SelectItem>
+              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="kn">Kannada</SelectItem>
+              <SelectItem value="ta">Tamil</SelectItem>
+              <SelectItem value="te">Telugu</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
